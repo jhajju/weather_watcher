@@ -15,8 +15,13 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from weather import views as weather_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', weather_views.city_list, name='city_list'),  # 👈 root URL shows city list
+    path('accounts/', include('accounts.urls')),  # 👈 your custom URLs
+    path('accounts/', include('django.contrib.auth.urls')),  # 👈 built-in login/logout
+    path('', include('weather.urls')),  # 👈 This line connects your weather app
 ]

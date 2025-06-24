@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<h2 class="mb-4">Your Cities</h2>
+
+<!-- Add City Form -->
+<form method="POST" class="mb-4 d-flex">
+    {% csrf_token %}
+    {{ form.name }}  {# This renders just the name field from CityForm #}
+    <button type="submit" class="btn btn-primary ms-2">Add City</button>
+</form>
+
+<!-- Show Cards for Each Saved City -->
+{% if weather_data %}
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    {% for city in weather_data %}
+    <div class="col">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">{{ city.name }}</h5>
+                <p class="card-text">
+                    {{ city.temperature }}°C - {{ city.description }}
+                </p>
+                <img src="https://openweathermap.org/img/wn/{{ city.icon }}@2x.png" alt="icon">
+
+                <!-- Delete Form for Each City -->
+                <form method="POST" action="{% url 'delete_city' city.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline-danger btn-sm mt-2">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<p>No cities yet.</p>
+{% endif %}
+
+<!-- Logout Button -->
+<a href="{% url 'logout' %}" class="btn btn-secondary mt-4">Logout</a>
+{% endblock %}
