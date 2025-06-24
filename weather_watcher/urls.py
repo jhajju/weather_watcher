@@ -20,8 +20,8 @@ from weather import views as weather_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', weather_views.city_list, name='city_list'),  # 👈 root URL shows city list
-    path('accounts/', include('accounts.urls')),  # 👈 your custom URLs
-    path('accounts/', include('django.contrib.auth.urls')),  # 👈 built-in login/logout
-    path('', include('weather.urls')),  # 👈 This line connects your weather app
+    path('', weather_views.city_list, name='city_list'), 
+    path('accounts/', include('accounts.urls')), 
+    path('accounts/', include('django.contrib.auth.urls')), 
+    path('', include('weather.urls')), 
 ]
